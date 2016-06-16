@@ -1,0 +1,329 @@
+package com.example.tests;
+
+
+
+//import static org.junit.Assert.*;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+//import org.junit.Test;
+//import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.remote.DesiredCapabilities;
+
+
+
+
+
+
+import org.junit.Test;
+
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
+
+
+public class WasdTests {
+	//Variables for Post deploymnet tests
+	//can be used across methods.
+	private Selenium selenium;
+	private String loginUserID = "9854521096";
+	private String loginUserID1 = "9601200561";
+	private WasdAccountProfile accountProfile = new WasdAccountProfile();
+	//private String longPwd = "password";
+	//private String pageLoadTime= "50000";
+	
+	
+	@Before
+	public void setUp() throws Exception {
+		selenium = new DefaultSelenium("localhost", 4444, "*googlechrome C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" , "http://s0141668.miamidade.gov:9091/#/wasd/paymentHistory");
+		selenium.start();
+		//get profile configurations from config file. //search google on how to retrieve config settings for unit tests. 
+		accountProfile.setLoginUserID("9601200561");
+		accountProfile.setAccountNumber("9601200561");
+		accountProfile.setAddress("12262 SW 201ST TER");
+		accountProfile.setFolio("30-6912-044-0640");
+		accountProfile.setPrimaryAccount("N/A");
+		accountProfile.setAmountDue("$0.00");
+		accountProfile.setPastDueDate("04-20-2015");
+		accountProfile.setCurrentCharges("$167.57");
+		accountProfile.setLastPaymentReceived("$167.57 on 04-20-2015");
+		accountProfile.setServices("Water Service", "Waste Water Service");  
+
+	}
+
+	
+	@Test
+	public void addressBarVarification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(7000);
+		selenium.getText("css=#prem_address > div:nth-child(1)");
+		System.out.println(selenium.getText("css=#prem_address > div:nth-child(1)"));
+		selenium.getText("css=#prem_address > div:nth-child(2)");
+		System.out.println(selenium.getText("css=#prem_address > div:nth-child(2)"));
+		selenium.getText("css=#current_account > div.row > div:nth-child(2) > div > p.account-value.ng-binding");
+		System.out.println(selenium.getText("css=#current_account > div.row > div:nth-child(2) > div > p.account-value.ng-binding"));
+		selenium.getText("css=#current_account > div.row > div:nth-child(2) > div > p.account-label");
+		System.out.println(selenium.getText("css=#current_account > div.row > div:nth-child(2) > div > p.account-label"));
+		selenium.getText("css=#current_account > div.row > div:nth-child(3) > div > p.account-value.ng-binding");
+		System.out.println(selenium.getText("css=#current_account > div.row > div:nth-child(3) > div > p.account-value.ng-binding"));
+		selenium.getText("css=#current_account > div.row > div:nth-child(3) > div > p.account-label");
+		System.out.println(selenium.getText("css=#current_account > div.row > div:nth-child(3) > div > p.account-label"));
+		selenium.getText("css=#current_account > div.row > div.col-md-3.col-sm-4 > div > p.account-value.ng-binding");
+		System.out.println(selenium.getText("css=#current_account > div.row > div.col-md-3.col-sm-4 > div > p.account-value.ng-binding"));
+		selenium.getText("css=#current_account > div.row > div.col-md-3.col-sm-4 > div > p.account-label");
+		System.out.println(selenium.getText("css=#current_account > div.row > div.col-md-3.col-sm-4 > div > p.account-label"));
+		assertTrue(selenium.isTextPresent(accountProfile.getAddress()));
+		assertTrue(selenium.isTextPresent(accountProfile.getFolio()));
+		assertTrue(selenium.isTextPresent("Folio"));
+		assertTrue(selenium.isTextPresent(accountProfile.getAccountNumber()));
+		assertTrue(selenium.isTextPresent("Account"));
+		assertTrue(selenium.isTextPresent(accountProfile.getPrimaryAccount()));
+		assertTrue(selenium.isTextPresent("Primary"));
+		System.out.println("AddressBarVarification:Done");
+	}
+	
+	
+	@Test
+	public void paymentVarification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(7000);
+		selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(1) > h2");
+		System.out.println(selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(1) > h2"));
+		selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(1) > p");
+		System.out.println(selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(1) > p"));
+		selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(2) > h3");
+		System.out.println(selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(2) > h3"));
+		selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(2) > p");
+		System.out.println(selenium.getText("css=#money_box > div.row.bottom15 > div:nth-child(2) > p"));
+		selenium.getText("css=#money_box > div:nth-child(2) > a");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(2) > a"));
+		selenium.getText("css=#money_box > div:nth-child(3) > p.account-value.ng-binding");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(3) > p.account-value.ng-binding"));
+		selenium.getText("css=#money_box > div:nth-child(3) > p.account-label");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(3) > p.account-label"));
+		selenium.getText("css=#money_box > div:nth-child(3) > a");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(3) > a"));
+		selenium.getText("css=#money_box > div:nth-child(4) > p.account-value.ng-binding");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(4) > p.account-value.ng-binding"));
+		selenium.getText("css=#money_box > div:nth-child(4) > p.account-label");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(4) > p.account-label"));
+		selenium.getText("css=#money_box > div:nth-child(4) > a");
+		System.out.println(selenium.getText("css=#money_box > div:nth-child(4) > a"));
+		assertTrue(selenium.isTextPresent(accountProfile.getAmountDue()));
+		assertTrue(selenium.isTextPresent("Total Amount Due"));
+		assertTrue(selenium.isTextPresent(accountProfile.getPastDueDate()));
+		assertTrue(selenium.isTextPresent("Past Due Date"));
+		assertTrue(selenium.isTextPresent("Pay Bill"));
+		assertTrue(selenium.isTextPresent(accountProfile.getCurrentCharges()));
+		assertTrue(selenium.isTextPresent("Current Charges"));
+		assertTrue(selenium.isTextPresent("View Current Bill"));
+		assertTrue(selenium.isTextPresent(accountProfile.getLastPaymentReceived()));
+		assertTrue(selenium.isTextPresent("Last Payment Received"));
+		assertTrue(selenium.isTextPresent("Account History"));
+		System.out.println("PaymentVarification:Done");
+	}
+
+	@Test
+	public void accountDetailsVarification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(7000);
+		selenium.getText("id=account-info");
+		System.out.println(selenium.getText("id=account-info"));
+		assertTrue(selenium.isVisible("css=#account-info > div.bottom15 > div:nth-child(2) > div > ul > li:nth-child(1)"));	
+		assertTrue(selenium.isVisible("css=#account-info > div.bottom15 > div:nth-child(2) > div > ul > li:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#account-info > div.bottom15 > div:nth-child(3) > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#account-info > div.bottom15 > div:nth-child(4) > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#account-additional > div:nth-child(1) > div > p"));
+		assertTrue(selenium.isVisible("css=#account-additional > div:nth-child(2) > p:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#account-additional > div:nth-child(2) > p:nth-child(3)"));
+		assertTrue(selenium.isVisible("css=#account-additional > div:nth-child(2) > p:nth-child(4)"));
+		assertTrue(selenium.isVisible("css=#account-additional > div:nth-child(2) > p:nth-child(5)"));
+		System.out.println("AccountDetailsVarification:Done");
+	}
+	
+	@Test
+	public void accountHomeMessagesVarification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(7000);
+		selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-heading > h3");
+		System.out.println(selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-heading > h3"));
+		selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-body");
+		System.out.println(selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-body"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(2) > div > div.panel-body"));
+		System.out.println("AccountHomeMessagesVarification:Done");
+	};
+	
+	@Test 
+	public void currentPeriodVarification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(7000);
+		selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body");
+		System.out.println(selenium.getText("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(1) > a"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(1)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(3)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(4)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(5)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(6)"));
+		assertTrue(selenium.isVisible("css=#content_area > ui-view:nth-child(2) > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(7)"));
+		System.out.println("CurrentPeriodVerification:Done");
+	}
+
+	@Test
+	public void accountHistoryVerification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(10000);
+		selenium.click("css=#sidebar > div:nth-child(2) > a:nth-child(4)");
+		selenium.getText("id=bill_hist");
+		System.out.println(selenium.getText("id=bill_hist"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(1) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(1)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(3)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(4)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(5)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(6)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(2) > div:nth-child(2) > div.panel-body > div.table-responsive.meter-active.meter-base.meter-show > table > tbody > tr > td:nth-child(7)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(1) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-heading"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(2) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(3) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(4) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(5) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(6) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(1) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(7) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(8) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(1) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(9) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(1) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(10) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-heading > h3"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > div.row.bottom15 > div.col-xs-12.col-sm-4.col-md-4.col-lg-3 > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > div.row.bottom15 > div:nth-child(2) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > div.row.bottom15 > div:nth-child(3) > div > p:nth-child(2) > a"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > div.row.bottom15 > div:nth-child(4) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > div.row.bottom15 > div:nth-child(5) > div > p.account-value.ng-binding"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > a.btn.btn-primary.btn-sm.bottom15 > span"));
+		assertTrue(selenium.isVisible("css=#bill_hist > ui-view:nth-child(3) > div:nth-child(11) > div.panel-body > a.btn.btn-info.btn-sm.bottom15.sh-bill > span:nth-child(2)"));
+		System.out.println("Bill History Feild Verification:Done");
+	}
+	
+	@Test
+	public void paymentHistoryVerification() throws Exception {
+		selenium.open("http://s0141668.miamidade.gov:9091/#/wasd");
+		selenium.type("id=account_select", accountProfile.getLoginUserID() );
+		selenium.click("css=#sidebar > div.text-center.small-welcome > form > div > span > button");
+		Thread.sleep(10000);
+		selenium.click("css=#sidebar > div:nth-child(2) > a:nth-child(5)");
+		selenium.getText("css=#pay_hist > div > div > div > table > thead");
+		System.out.println(selenium.getText("css=#pay_hist > div > div > div > table > thead"));
+		selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(1)");
+		System.out.println(selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(1)"));
+		selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(2)");
+		System.out.println(selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(2)"));
+		selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(3)");
+		System.out.println(selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(3)"));
+		selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(4)");
+		System.out.println(selenium.getText("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(4)"));
+		assertTrue(selenium.isVisible("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(1)"));
+		assertTrue(selenium.isVisible("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(2)"));
+		assertTrue(selenium.isVisible("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(3)"));
+		assertTrue(selenium.isVisible("css=#pay_hist > div > div > div > table > tbody > tr:nth-child(4)"));
+		System.out.println("PaymentHistoryVerification:Done");
+	}
+	@After
+	public void tearDown() throws Exception {
+	 selenium.stop();
+	}
+}
