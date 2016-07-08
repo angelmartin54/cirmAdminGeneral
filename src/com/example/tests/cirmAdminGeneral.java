@@ -32,6 +32,9 @@ public class cirmAdminGeneral {
 //	private String site = "https://s0020269/";
 //	private String site = "https://s0020284/html/startup.html#";
 	private String site = "https://311hub.miamidade.gov/#";
+//	private String site = "https://s0144654/html/startup.html";
+//	private String site = "https://cirm.miamidade.gov/html/startup.html";
+//	private String site = "https://cirm.311.miamidade.gov/html/login.html";
 	private String loginUserID = "c203036";
 	private String pass = "hahahaha147";
 	private String longPwd = "something"; 
@@ -48,9 +51,7 @@ public class cirmAdminGeneral {
 	    	ln("failed");
 	     }
 	}
-		
-	//private String longPwd = "password";
-	//private String pageLoadTime= "50000";
+
 	
 	
 	public static boolean isMyServerUp(){
@@ -72,7 +73,7 @@ public class cirmAdminGeneral {
 	private Thread myThread = new Thread() {
 	    public void run() {
 	        try {
-	        	Process P = Runtime.getRuntime().exec("cmd /c start javaw -jar C:\\users\\angel.martin.MIAMIDADE\\Downloads\\selenium-server-standalone-2.53.0.jar -trustAllSSLCertificates -disable-web-security");
+	        	Process P = Runtime.getRuntime().exec("cmd /c start javaw -jar C:\\users\\angel.martin.MIAMIDADE\\Downloads\\selenium-server-standalone-2.53.1.jar -trustAllSSLCertificates");
 	        	P.waitFor();
 				System.out.println("Sucessfully started selenium server");
 	        	
@@ -85,8 +86,6 @@ public class cirmAdminGeneral {
 	
 	@Before
 	public void startServer () throws Exception {
-//		SendEmail.send("rajiv@miamidade.gov","test is starting", "test is starting");
-		
 		myThread.start();
 
 		int c = 0;
@@ -100,6 +99,8 @@ public class cirmAdminGeneral {
 		RemoteControlConfiguration settings = new RemoteControlConfiguration();
 		settings.setTrustAllSSLCertificates(true);
 		settings.setAvoidProxy(true);
+		
+		
 		
 		selenium = new DefaultSelenium("localhost", 4444, "*googlechrome C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" , site);              
          
@@ -134,73 +135,9 @@ public class cirmAdminGeneral {
             System.out.println(e);
             selenium.captureScreenshot("C://Users/angel.martin.MIAMIDADE/Desktop/failedtest/Validateaddress.png");
             SendEmail.send("angel.martin@miamidade.gov", "Validate address has failed", "**Validate address test has failed**<br><br>Screen shot on failure can be found at File:///C://Users/angel.martin.MIAMIDADE/Desktop/failedtest/Validateaddress.png<br><br><br>To manually test this follow the steps below<br>* Open Chorme and navigate to the CiRM application<br>* Fill in the User and Password boxes<br>* Then click the Login button and wait 8-10 seconds for the application to load<br>* Once you enter the application type a valid address in the address box<br>* To submit address for validation click the magnifiying glass<br>* Once you click the magnifiying glass there should be a green box that appears with a check-mark this signifies that the address has been validated and the test has passed<br><br>"+e.getMessage());
-            Assert.fail();
-        }}
-	@Test
-	public void addloop() throws Exception {
-		selenium.open(site);
-		System.out.print("[");
-		selenium.type("id=iUsername", loginUserID);
-		selenium.type("id=iPassword", pass);
-		selenium.click("id=btnLogin");
-		Thread.sleep(8000);
-		selenium.click("//input[@value='']");
-		selenium.type("//input[@value='']", "9920 sw 73rd st");
-		selenium.click("//input[@value='Search']");
-		Thread.sleep(2000);
-		if((selenium.isVisible("css=#answer_hub > div:nth-child(1) > span > input.ic_valid.button_icon.visibility_visible"))==true){
-			System.out.print("=");
-			selenium.refresh();
-			selenium.type("id=iUsername", loginUserID);
-			selenium.type("id=iPassword", pass);
-			selenium.click("id=btnLogin");
-			Thread.sleep(8000);
-			selenium.click("//input[@value='']");
-			selenium.type("//input[@value='']", "9920 sw 73rd st");
-			selenium.click("//input[@value='Search']");
-			Thread.sleep(2000);
-		if((selenium.isVisible("css=#answer_hub > div:nth-child(1) > span > input.ic_valid.button_icon.visibility_visible"))==true){
-			System.out.print("=");
-			selenium.refresh();
-			selenium.type("id=iUsername", loginUserID);
-			selenium.type("id=iPassword", pass);
-			selenium.click("id=btnLogin");
-			Thread.sleep(8000);
-			selenium.click("//input[@value='']");
-			selenium.type("//input[@value='']", "9920 sw 73rd st");
-			selenium.click("//input[@value='Search']");
-			Thread.sleep(2000);
-		if((selenium.isVisible("css=#answer_hub > div:nth-child(1) > span > input.ic_valid.button_icon.visibility_visible"))==true){
-			System.out.print("=");
-			selenium.refresh();
-			selenium.type("id=iUsername", loginUserID);
-			selenium.type("id=iPassword", pass);
-			selenium.click("id=btnLogin");
-			Thread.sleep(8000);
-			selenium.click("//input[@value='']");
-			selenium.type("//input[@value='']", "9920 sw 73rd st");
-			selenium.click("//input[@value='Search']");
-			Thread.sleep(2000);
-			if((selenium.isVisible("css=#answer_hub > div:nth-child(1) > span > input.ic_valid.button_icon.visibility_visible"))==true){
-				System.out.print("]: Test PASSED");
-				}
-		} else { 
-			ln("adress did not validate");
-			ln(selenium.isElementPresent("css=#answer_hub > div:nth-child(1) > span > input.ic_valid.button_icon.visibility_visible"));
-			Assert.fail();
-		}}}}			
-	@Test
-	public void GISInfoTab() throws Exception {
-		try{
-		ValidateAddress();
-		selenium.click("id=geo_info_district");
-		assertTrue(selenium.isTextPresent("District"));
-		}catch (Exception e){
-            System.out.println(e);
-            selenium.captureScreenshot("C://Users/angel.martin.MIAMIDADE/Desktop/failedtest/GeoInfoTab.png");
-            SendEmail.send("angel.martin@miamidade.gov", "GIS Info Tab has Failed", "**GIS Info Tab test has failed**<br><br>Screen shot on failure can be found at File:///C://Users/angel.martin.MIAMIDADE/Desktop/failedtest/Validateaddress.png<br><br><br>To manually test this follow the steps below<br>* Open Chorme and navigate to the CiRM application<br>* Fill in the User and Password boxes<br>* Then click the Login button and wait 8-10 seconds for the application to load<br>* Once you enter the application type a valid address in the address box<br>* To submit address for validation click the magnifiying glass<br>* Once you click the magnifiying glass there should be a green box that appears with a check-mark this signifies that the address has been validated<br>* Then click GIS info tab on the right second from the bottom<br>* A pop up should come up titled District when this happens the test has passed<br><br>"+e.getMessage());
-            Assert.fail();
-        }}
+            Assert.fail();}}
+    
+
 	@Test
 	public void OpenSRInAnswerHub() throws Exception {
 		try{
@@ -289,7 +226,7 @@ public class cirmAdminGeneral {
             SendEmail.send("angel.martin@miamidade.gov", "Master CLR Failed", "**Master CLR**<br><br>"+e.getMessage());
             Assert.fail();
         }}
-// 	@Test	
+ 	@Test	
  	public void SaveSr() throws Exception {
 //		try{
  		OpenSRInAnswerHub();
@@ -332,10 +269,10 @@ public class cirmAdminGeneral {
 		selenium.click("xpath=(//button[@type='button'])[3]");
 		selenium.click("//div[@id='sr_details']/div[23]/div/div[50]/input");
 		selenium.type("//div[@id='sr_details']/div[23]/div/div[50]/input", "3305111234");
-//		selenium.click("css=#save");
-//		selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search");
-//		System.out.println(selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search"));
-//		selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search");
+		selenium.click("css=#save");
+		selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search");
+		System.out.println(selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search"));
+		selenium.getValue("css=#editorDiv > div.app_container > div.right_column.grid_2 > span > input.search");
 //		}catch (Exception e){
 //            System.out.println(e);
 //            selenium.captureScreenshot("C://Users/angel.martin.MIAMIDADE/Desktop/failed test/SaveSr.png");
@@ -525,9 +462,9 @@ public class cirmAdminGeneral {
 	}
 	@After
 	public void tearDown() throws Exception {
-	 selenium.stop();
-	 selenium.shutDownSeleniumServer();
-	 ln("server successfully shut down.");
+//	 selenium.stop();
+//	 selenium.shutDownSeleniumServer();
+//	 ln("server successfully shut down.");
 	
 	}
 }
